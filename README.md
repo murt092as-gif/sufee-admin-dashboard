@@ -1,4 +1,4 @@
-# Sufee HTML5 Admin Dashboard Template v2.1
+# Sufee HTML5 Admin Dashboard Template v2.2
 
 [![Sufee Admin Dashboard](./sufee-admin-dashboard.png)](https://colorlib.com/polygon/sufee/index.html)
 
@@ -6,7 +6,17 @@
 
 [View Live Demo →](https://colorlib.com/polygon/sufee/index.html)
 
-## What's New in v2.1
+## What's New in v2.2
+
+### Dependency Updates
+- **Bootstrap 5.3.8**: Latest stable release with bug fixes and improvements
+- **Font Awesome 7.1.0**: Major upgrade with new icon library and enhanced features
+- **Vite 7.1.8**: Latest build system with improved performance and HMR
+- **ESLint 9.36.0**: Enhanced JavaScript linting with better rule support
+- **Sass 1.93.2**: Updated SCSS compiler for faster compilation
+- **Zero Vulnerabilities**: All dependencies updated with latest security patches
+
+### What's New in v2.1
 
 ### Code Quality & Developer Experience
 - **ESLint & Prettier Integration**: Professional code quality tools with automatic formatting

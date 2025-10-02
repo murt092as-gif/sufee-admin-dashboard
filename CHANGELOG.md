@@ -5,6 +5,33 @@ All notable changes to the Sufee Admin Dashboard Template will be documented in 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2025-10-02
+
+### Updated
+- **Dependencies**: Updated all dependencies to their latest versions
+  - **Bootstrap**: 5.3.7 → 5.3.8 (latest stable release)
+  - **Font Awesome**: 6.7.2 → 7.1.0 (major version upgrade with new icons and features)
+  - **ESLint**: 9.32.0 → 9.36.0 (improved JavaScript linting)
+  - **Vite**: 7.0.6 → 7.1.8 (enhanced build performance)
+  - **Sass**: 1.89.2 → 1.93.2 (updated SCSS compiler)
+  - **@vitejs/plugin-legacy**: 7.1.0 → 7.2.1 (improved browser compatibility)
+  - **eslint-plugin-prettier**: 5.5.3 → 5.5.4 (better formatting integration)
+  - **vite-plugin-static-copy**: 3.1.2 → 3.1.3 (enhanced static file handling)
+
+### Performance
+- **Build System**: Latest Vite version provides faster builds and improved HMR
+- **SCSS Compilation**: Updated Sass compiler for better performance
+- **Code Quality**: Latest ESLint version with improved rule performance
+
+### Security
+- **Zero Vulnerabilities**: All dependency updates maintain zero security vulnerabilities
+- **Latest Patches**: All packages updated to include latest security fixes
+
+### Notes
+- Font Awesome 7.x introduces new icon library structure - all existing icons remain compatible
+- Bootstrap 5.3.8 includes minor bug fixes and improvements from 5.3.7
+- All breaking changes tested and verified - no code changes required
+
 ## [2.1.0] - 2025-08-05
 
 ### Added

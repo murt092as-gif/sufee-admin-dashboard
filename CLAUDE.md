@@ -6,7 +6,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Sufee is a responsive Bootstrap 5 Admin Dashboard Template built with HTML, CSS/SCSS, and JavaScript. Originally a Bootstrap 4 template, it has been completely modernized in v2.0 with Bootstrap 5, Vite build system, and a component-based architecture. It's a static front-end template with no backend components, designed for creating admin interfaces and dashboards.
 
+### Version 2.2 Changes
+
+- Updated all dependencies to their latest versions
+- Bootstrap 5.3.8 (latest stable release)
+- Font Awesome 7.1.0 (major upgrade with new icons)
+- Vite 7.1.8 (enhanced build performance)
+- ESLint 9.36.0, Sass 1.93.2, and other dev tools updated
+- Zero security vulnerabilities across all dependencies
+
+### Version 2.1 Changes
+
+- ESLint & Prettier integration for code quality and formatting
+- Professional error handling with custom 404/500 pages
+- Self-hosted fonts for privacy and GDPR compliance
+- Global error handler with user-friendly notifications
+- Enhanced build process with error page integration
+
 ### Version 2.0 Changes
+
 - Migrated from Bootstrap 4 to Bootstrap 5
 - Replaced Grunt/Bower with Vite/NPM
 - Added dynamic partials system for code reusability
@@ -21,11 +39,15 @@ This project uses Vite for build automation and development:
 
 ### Development Commands
 
-- `npm run dev` - Starts the Vite development server with hot module replacement
+- `npm run dev` - Starts the Vite development server with hot module replacement on port 3001
 - `npm run build` - Builds the project for production
 - `npm run preview` - Previews the production build locally
-- `npm run lint` - Placeholder for linting (not yet configured)
-- `npm run typecheck` - Placeholder for TypeScript checking (not yet configured)
+- `npm run lint` - Lint and auto-fix JavaScript code with ESLint
+- `npm run lint:check` - Check for linting errors without fixing
+- `npm run format` - Format all files with Prettier
+- `npm run format:check` - Check formatting without modifying files
+- `npm run quality:fix` - Run both linting and formatting (recommended before commits)
+- `npm run quality` - Check both linting and formatting without changes
 
 ### Build Pipeline
 
@@ -34,6 +56,15 @@ This project uses Vite for build automation and development:
 3. **Module Resolution**: ES modules with optimized dependency pre-bundling
 4. **Production Build**: Minification, tree-shaking, and code splitting
 5. **Legacy Support**: Optional legacy browser support via @vitejs/plugin-legacy
+
+### Code Quality Tools
+
+The project includes modern code quality tools:
+
+- **ESLint**: JavaScript linting with modern ES6+ rules and best practices
+- **Prettier**: Automatic code formatting with consistent style
+- **Configuration**: Custom rules defined in `eslint.config.js` and `.prettierrc.json`
+- **Pre-commit**: Run `npm run quality:fix` before committing to ensure code quality
 
 ### Dependency Management
 
@@ -44,10 +75,34 @@ Key dependencies include Bootstrap 5, Chart.js, and various visualization librar
 
 ### Core Structure
 
-- **Static HTML Templates**: Multiple HTML pages in src/ directory (index.html, ui-*.html) and root directory
+- **Static HTML Templates**: Multiple HTML pages in src/ directory (index.html, ui-*.html, etc.)
 - **SCSS Architecture**: Modular SCSS with partials in src/styles/
 - **JavaScript Components**: Main entry point in src/main.js with modular components
 - **Vendor Dependencies**: All managed through NPM and imported via Vite
+- **Multi-page Application**: Each HTML file is a separate entry point configured in `vite.config.js`
+
+### Application Architecture
+
+The application follows a component-based architecture:
+
+1. **App Class** (`src/scripts/app.js`): Main application controller
+   - Manages component lifecycle
+   - Handles sidebar state and responsive behavior
+   - Provides global utilities (notifications, keyboard shortcuts)
+   - Dynamically loads page-specific components
+
+2. **Partials Loader** (`src/scripts/partials-loader.js`): Dynamic HTML component system
+   - Loads reusable HTML partials (header, sidebar, etc.)
+   - Manages active navigation states
+   - Generates dynamic breadcrumbs
+
+3. **Component Modules** (`src/scripts/components/`): Self-contained UI components
+   - Charts, DataTables, forms, widgets, etc.
+   - Each component handles its own initialization and cleanup
+   - Lazy-loaded based on page requirements
+
+4. **Utilities** (`src/scripts/utils/`): Shared helper functions
+   - DOM utilities, error handling, etc.
 
 ### Key Directories
 
@@ -107,16 +162,33 @@ The main stylesheet (`src/styles/main.scss`) imports:
 
 ### JavaScript Integration
 
-- Main entry point is `src/main.js` which imports all dependencies
-- Component scripts are in `src/scripts/`
+- Main entry point is `src/main.js` which imports all dependencies and initializes the application
+- Component scripts are organized in `src/scripts/components/`
+- Utility functions are in `src/scripts/utils/`
+- Core application logic is in `src/scripts/app.js` (App class)
 - All vendor libraries are imported as ES modules
 - All JavaScript is modern ES6+ modules with no jQuery dependency
+- Bootstrap, Chart.js, and error handler are exposed globally in development mode for debugging
 
 ### Browser Support
 
 - CSS is post-processed for compatibility with last 4 versions of major browsers
 - IE support has been removed as Internet Explorer was discontinued in 2022
 - The `<meta http-equiv="X-UA-Compatible" content="IE=edge">` tag should not be used in any HTML files
+
+### Vite Configuration
+
+The Vite build is configured with:
+
+- **Root directory**: `src/` (all source files)
+- **Multi-page setup**: Each HTML page is a separate entry point in `rollupOptions.input`
+- **Path aliases**: `@`, `@styles`, `@scripts`, `@assets` for clean imports
+- **SCSS**: Modern compiler API for fast compilation
+- **Static copy**: Partials directory copied to build output
+- **Dev server**: Runs on port 3001 with auto-open enabled
+- **Production**: Source maps, code splitting, and minification enabled
+
+When adding new HTML pages, add them to the `rollupOptions.input` object in `vite.config.js`.
 
 This is a front-end only template - no server-side components or API integrations are included.
 
@@ -172,7 +244,7 @@ Add these data attributes to div elements where you want partials to load:
 
 #### Directory Structure
 
-```
+```text
 src/
 ├── partials/
 │   ├── head-common.html      # Common head elements
@@ -180,8 +252,21 @@ src/
 │   ├── header.html           # Top header
 │   └── scripts-common.html   # Common scripts
 ├── scripts/
+│   ├── app.js                # Main application class
 │   ├── partials-loader.js    # Main partials loading system
-│   └── breadcrumb-helper.js  # Breadcrumb generation
+│   ├── breadcrumb-helper.js  # Breadcrumb generation
+│   ├── components/           # UI component modules
+│   │   ├── charts.js         # Chart.js integration
+│   │   ├── datatable.js      # DataTables integration
+│   │   ├── navigation.js     # Navigation component
+│   │   ├── theme-manager.js  # Theme switching
+│   │   ├── user-menu.js      # User menu component
+│   │   ├── validation.js     # Form validation
+│   │   ├── widgets.js        # Dashboard widgets
+│   │   └── ...
+│   └── utils/                # Utility functions
+│       ├── dom.js            # DOM utilities
+│       └── error-handler.js  # Global error handling
 └── main.js                   # Entry point with partials initialization
 ```
 
@@ -197,14 +282,30 @@ The `partials-loader.js` module provides:
 
 #### Integration in main.js
 
+The application initializes in this order:
+
 ```javascript
+import { App } from './scripts/app.js'
 import { partialsLoader } from './scripts/partials-loader.js'
 
-// Initialize partials system
+// 1. Create and initialize App instance
+const app = new App()
+app.init()
+
+// 2. Load all partials (header, sidebar, etc.)
 partialsLoader.loadAllPartials()
 partialsLoader.initializeSidebarActiveState()
 partialsLoader.initializeHeader()
 ```
+
+The App class handles:
+
+- Component lifecycle management
+- Sidebar toggle functionality (desktop collapse, mobile slide)
+- Responsive behavior and state persistence
+- Keyboard shortcuts (Ctrl+K for search, Ctrl+\ for sidebar toggle, Esc to close)
+- Dynamic component loading based on page type
+- Global notification system
 
 ### Creating New Partials
 
